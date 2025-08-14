@@ -78,3 +78,14 @@ resource "aws_instance" "ankit" {
 
 # chmod 400 key_file
 # ssh -i key_file ec2-user@public_ip
+
+resource "aws_instance" "awsinstance" {
+    ami = "unknown"
+    instance_type = "unknown"
+}
+
+# terraform import aws_instance.definednameOfInstance_inTerraform instance_id
+# terraform state list
+# terraform state show <resource_name>
+# terraform state rm <resource_name>
+# terraform state mv <src> <dest>
