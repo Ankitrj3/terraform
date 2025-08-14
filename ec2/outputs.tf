@@ -12,7 +12,7 @@
 #   value = aws_instance.ankit.private_ip
 # }
 
-# output "instance_id" { # this output will use in count metadata
+# output "instance_id" { # this output will use in count meta-argument
 #   value = aws_instance.ankit[*].id
 # }
 # output "public_ip" {
@@ -25,7 +25,7 @@
 #   value = aws_instance.ankit[*].private_ip
 # }
 
-# this work in for_each metadata 
+# this work in for_each meta-argument
 output "instance_id" {
   value = [for key in aws_instance.ankit : key.id]
 }
