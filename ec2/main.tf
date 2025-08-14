@@ -56,6 +56,7 @@ resource "aws_instance" "ankit" {
     for_each = tomap({
         instance-ankit = "t2.micro"
         instance-ankitmedium = "t2.medium"
+        instance-ankitsmall = "t2.small"
     })
     # count = 3 # it will create 3 instances with same name
     # one more meta-argument
@@ -79,10 +80,10 @@ resource "aws_instance" "ankit" {
 # chmod 400 key_file
 # ssh -i key_file ec2-user@public_ip
 
-resource "aws_instance" "awsinstance" {
-    ami = "unknown"
-    instance_type = "unknown"
-}
+# resource "aws_instance" "awsinstance" {
+#     ami = "unknown"
+#     instance_type = "unknown"
+# }
 
 # terraform import aws_instance.definednameOfInstance_inTerraform instance_id
 # terraform state list

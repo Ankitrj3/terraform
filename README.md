@@ -45,4 +45,81 @@ terraform destroy
 - Store sensitive variables securely (e.g., use environment variables or a secrets manager).
 
 ---
-For more details, see the [Terraform documentation](https://www.terraform.io/docs/index.html).
+
+---
+
+# Integrating a Common Backend for Remote State Locking
+
+This section explains how to set up and integrate a common backend for remote state locking using Terraform. It demonstrates integrating a shared backend (e.g., S3 with DynamoDB for state locking) and connecting your `ec2` module to the `remoteInfra` backend.
+
+## 1. Create a Common Remote Backend
+
+In your `remoteInfra` directory, define the backend resources (e.g., S3 bucket and DynamoDB table):
+
+```hcl
+# remoteInfra/main.tf
+resource "aws_s3_bucket" "terraform_state" {
+	bucket = "your-unique-terraform-state-bucket"
+	acl    = "private"
+}
+
+resource "aws_dynamodb_table" "terraform_locks" {
+	name         = "terraform-locks"
+	billing_mode = "PAY_PER_REQUEST"
+	hash_key     = "LockID"
+
+	attribute {
+		name = "LockID"
+		type = "S"
+	}
+}
+```
+
+Apply this configuration in the `remoteInfra` directory:
+
+```sh
+cd remoteInfra
+terraform init
+terraform apply
+```
+
+## 2. Configure Backend in Other Modules (e.g., ec2)
+
+In your `ec2` module, configure the backend to use the remote state:
+
+```hcl
+# ec2/terraform.tf
+terraform {
+	backend "s3" {
+		bucket         = "your-unique-terraform-state-bucket"
+		key            = "ec2/terraform.tfstate"
+		region         = "ap-south-1"
+		dynamodb_table = "terraform-locks"
+		encrypt        = true
+	}
+}
+```
+
+## 3. Initialize and Migrate State
+
+After updating the backend configuration, initialize the backend in your `ec2` directory:
+
+```sh
+cd ec2
+terraform init
+```
+Terraform will prompt to migrate your state to the new backend. Confirm to proceed.
+
+## 4. Best Practices
+- Use unique S3 bucket names.
+- Enable versioning on the S3 bucket for state recovery.
+- Restrict access to the S3 bucket and DynamoDB table.
+- Never commit state files to git.
+
+---
+
+## References
+- [Terraform Remote State](https://www.terraform.io/docs/language/state/remote.html)
+- [Terraform S3 Backend](https://www.terraform.io/docs/language/settings/backends/s3.html)
+
+This setup ensures safe, collaborative infrastructure management with remote state and locking.
