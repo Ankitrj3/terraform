@@ -58,6 +58,10 @@ resource "aws_instance" "ankit" {
         instance-ankitmedium = "t2.medium"
     })
     # count = 3 # it will create 3 instances with same name
+    # one more meta-argument
+    # depends_on use to check if these resources are created before the instance
+    depends_on = [aws_key_pair.key_pair, aws_security_group.sg]
+    
     ami = var.ec2_ami
     instance_type = each.value
     key_name = aws_key_pair.key_pair.key_name
