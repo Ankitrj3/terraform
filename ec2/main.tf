@@ -66,3 +66,6 @@ resource "aws_instance" "ankit" {
         Name = "ankit-ec2"
     }
 }
+
+# chmod 400 key_file
+# ssh -i key_file ec2-user@public_ip
