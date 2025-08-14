@@ -61,14 +61,14 @@ resource "aws_instance" "ankit" {
     # one more meta-argument
     # depends_on use to check if these resources are created before the instance
     depends_on = [aws_key_pair.key_pair, aws_security_group.sg]
-    
+
     ami = var.ec2_ami
     instance_type = each.value
     key_name = aws_key_pair.key_pair.key_name
     security_groups = [aws_security_group.sg.name]
     user_data = file("nginx_install.sh")
     root_block_device {
-      volume_size = var.ec2_volume_size
+      volume_size = var.environment == "production" ? 20 : var.ec2_default_volume_size 
       volume_type = var.ec2_volume_type
     }
     tags = {
