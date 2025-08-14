@@ -53,14 +53,14 @@ resource "aws_security_group" "sg" {
 }
 # Now Ec2
 resource "aws_instance" "ankit" {
-    ami = "ami-0f918f7e67a3323f0"
-    instance_type = "t2.micro"
+    ami = var.ec2_ami
+    instance_type = var.ec2_instance_type
     key_name = aws_key_pair.key_pair.key_name
     security_groups = [aws_security_group.sg.name]
-
+    user_data = file("nginx_install.sh")
     root_block_device {
-      volume_size = 8
-      volume_type = "gp3"
+      volume_size = var.ec2_volume_size
+      volume_type = var.ec2_volume_type
     }
     tags = {
         Name = "ankit-ec2"
