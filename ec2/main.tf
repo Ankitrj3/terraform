@@ -53,8 +53,12 @@ resource "aws_security_group" "sg" {
 }
 # Now Ec2
 resource "aws_instance" "ankit" {
+    for_each = tomap({
+        instance-ankit = "t2.micro"
+        instance-ankitmedium = "t2.medium"
+    })
     ami = var.ec2_ami
-    instance_type = var.ec2_instance_type
+    instance_type = each.value
     key_name = aws_key_pair.key_pair.key_name
     security_groups = [aws_security_group.sg.name]
     user_data = file("nginx_install.sh")
@@ -63,7 +67,7 @@ resource "aws_instance" "ankit" {
       volume_type = var.ec2_volume_type
     }
     tags = {
-        Name = "ankit-ec2"
+        Name = each.key
     }
 }
 
