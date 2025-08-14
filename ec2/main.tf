@@ -57,6 +57,7 @@ resource "aws_instance" "ankit" {
         instance-ankit = "t2.micro"
         instance-ankitmedium = "t2.medium"
     })
+    # count = 3 # it will create 3 instances with same name
     ami = var.ec2_ami
     instance_type = each.value
     key_name = aws_key_pair.key_pair.key_name
