@@ -1,7 +1,7 @@
 # first creation of key-pair
 # generate key using ssh-keygen
 resource "aws_key_pair" "key_pair" {
-    key_name   = "ankit-key"
+    key_name   = "${var.environment}-ankit-key"
     public_key = file("ec2.pub")
 
 }
@@ -14,12 +14,12 @@ resource "aws_default_vpc" "default" {
 }
 # securityGroup
 resource "aws_security_group" "sg" {
-    name        = "ankit-sg"
+    name        = "${var.environment}-ankit-sg"
     description = "Allow SSH and HTTP"
     vpc_id = aws_default_vpc.default.id
 
     tags = {
-      Name = "ankit-sg"
+      Name = "${var.environment}-ankit-sg"
     }
 
     ingress  {
