@@ -127,7 +127,7 @@ Terraform will prompt to migrate your state to the new backend. Confirm to proce
 
 ## 6. git commands to manage the workspace with the branch
 - git checkout -b <branch_name> -> this create new branch
-- git checkout <brabch_name> -> to switch the branch
+- git checkout <branch_name> -> to switch the branch
 
 ## 7. Import the resources from cloud services
 - terraform import aws_instance.definednameOfInstance_inTerraform instance_id
