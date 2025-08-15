@@ -118,6 +118,25 @@ Terraform will prompt to migrate your state to the new backend. Confirm to proce
 
 ---
 
+## 5. Creation of Workspace and management
+- Create new workspace -> terraform workspace new <workspace_name>
+- Switch to different workspace -> terraform workspace select <workspace_name>
+- Delete the workspace -> terraform workspace delete <workspace_name>
+- To the number of workspace -> terraform workspace list
+- To the in which workspace you are working -> terraform workspace show
+
+## 6. git commands to manage the workspace with the branch
+- git checkout -b <branch_name> -> this create new branch
+- git checkout <brabch_name> -> to switch the branch
+
+## 7. Import the resources from cloud services
+- terraform import aws_instance.definednameOfInstance_inTerraform instance_id
+- terraform state list
+- terraform state show <resource_name>
+- terraform state rm <resource_name>
+- terraform state mv <src> <dest>
+---
+
 ## References
 - [Terraform Remote State](https://www.terraform.io/docs/language/state/remote.html)
 - [Terraform S3 Backend](https://www.terraform.io/docs/language/settings/backends/s3.html)
