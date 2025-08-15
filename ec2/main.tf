@@ -54,9 +54,7 @@ resource "aws_security_group" "sg" {
 # Now Ec2
 resource "aws_instance" "ankit" {
     for_each = tomap({
-        instance-ankit = "t2.micro"
-        instance-ankitmedium = "t2.medium"
-        instance-ankitsmall = "t2.small"
+        "t2.micro" = "t2.micro",
     })
     # count = 3 # it will create 3 instances with same name
     # one more meta-argument

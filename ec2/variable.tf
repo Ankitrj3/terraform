@@ -15,7 +15,7 @@ variable "ec2_volume_type" {
   type = string
 }
 variable "environment" {
-  default     = "production"
-#   default = "dev"
+#   default     = "production"
+  default = "dev"
   type = string
 }
