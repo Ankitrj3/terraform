@@ -74,6 +74,7 @@ resource "aws_instance" "ankit" {
     }
     tags = {
         Name = each.key
+        environment = var.environment
     }
 }
 
